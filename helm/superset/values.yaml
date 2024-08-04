@@ -94,7 +94,11 @@ extraEnvRaw: []
   #       key: password
 
 # -- Extra environment variables to pass as secrets
-extraSecretEnv: {}
+extraSecretEnv:
+  GOOGLE_KEY: ""
+  GOOGLE_SECRET: ""
+  SQLALCHEMY_DATABASE_URI: ""
+  SESSION_TIME: 15
   # MAPBOX_API_KEY: ...
   # # Google API Keys: https://console.cloud.google.com/apis/credentials
   # GOOGLE_KEY: ...
@@ -184,26 +188,26 @@ configMountPath: "/app/pythonpath"
 extraConfigMountPath: "/app/configs"
 
 image:
-  repository: apachesuperset.docker.scarf.sh/apache/superset
+  repository: asia-northeast3-docker.pkg.dev/beha-data/superset3/superset3
   tag: ~
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
 
 initImage:
-  repository: apache/superset
-  tag: dockerize
+  repository: asia-northeast3-docker.pkg.dev/beha-data/superset3/initdb
+  tag: dockerize_0803
   pullPolicy: IfNotPresent
 
 service:
-  type: ClusterIP
-  port: 8088
+  type: LoadBalancer
+  port: 80
   annotations: {}
     # cloud.google.com/load-balancer-type: "Internal"
   loadBalancerIP: ~
   nodePort:
     # -- (int)
-    http: nil
+    http: 30000
 
 ingress:
   enabled: false

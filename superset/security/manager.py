@@ -58,6 +58,8 @@ from superset.exceptions import (
     DatasetInvalidPermissionEvaluationException,
     SupersetSecurityException,
 )
+from superset.custom.customAuthOAuthView import AuthOAuthView
+
 from superset.security.guest_token import (
     GuestToken,
     GuestTokenResources,
@@ -207,7 +209,8 @@ class SupersetSecurityManager(  # pylint: disable=too-many-public-methods
 ):
     userstatschartview = None
     READ_ONLY_MODEL_VIEWS = {"Database", "DynamicPlugin"}
-
+    authoauthview = AuthOAuthView
+    
     USER_MODEL_VIEWS = {
         "RegisterUserModelView",
         "UserDBModelView",

@@ -1831,8 +1831,8 @@ if CONFIG_PATH_ENV_VAR in os.environ:
 elif importlib.util.find_spec("superset_config") and not is_test():
     try:
         # pylint: disable=import-error,wildcard-import,unused-wildcard-import
-        import superset_config
-        from superset_config import *  # noqa: F403, F401
+        import superset.superset_config as superset_config
+        from superset.superset_config import *  # noqa: F403, F401
 
         click.secho(
             f"Loaded your LOCAL configuration at [{superset_config.__file__}]",

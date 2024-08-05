@@ -59,3 +59,4 @@ AUTH_ROLE_ADMIN = 'Admin'
 AUTH_USER_REGISTRATION_ROLE = "Admin"
 # The default user self registration role
 # AUTH_USER_REGISTRATION_ROLE = "Public"
+ENABLE_PROXY_FIX = True

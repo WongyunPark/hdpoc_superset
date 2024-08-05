@@ -404,4 +404,4 @@ zstandard==0.22.0
 
 authlib
 psycopg2
-sqlalchemy-bigquery
+sqlalchemy-bigquery==1.9.0

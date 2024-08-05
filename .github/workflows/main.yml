@@ -1,0 +1,43 @@
+name : Bespin Superset Docker Build
+# 참조 https://github.com/marketplace/actions/build-and-push-docker-images
+on:
+  push:
+    branches:
+     - master
+     - 'feature/**'
+env:
+  GKE_PROJECT: beha-data
+  GKE_ZONE: asia-northeast3-a
+  GKE_CLUSTER: superset-dev
+  tag: ${{ github.sha }}
+  WORKLOAD_IDENTITY_POOL_ID: projects/319633121491/locations/global/workloadIdentityPools/github-actions
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: projects/319633121491/locations/global/workloadIdentityPools/github-actions/providers/superset-cicd
+          service_account: 'sa-superset-devloper@beha-data.iam.gserviceaccount.com'
+          audience: https://iam.googleapis.com/projects/319633121491/locations/global/workloadIdentityPools/github-actions/providers/superset-cicd
+
+      - name: Configure Docker Client
+        run:  |-
+          gcloud auth configure-docker --quiet #authenticate to gcr
+      - uses: RafikFarhad/push-to-gcr-github-action@v5-rc1
+        with:
+          registry: gcr.io
+          project_id: ${{secrets.GOOGLE_PROJECT_ID}}
+          image_name: superset3
+          image_tag: latest,${{ github.sha }}
+          dockerfile: ./Dockerfile
+          context: .

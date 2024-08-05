@@ -43,15 +43,18 @@ def create_bigquery_client(
         credentials_info = json.loads(base64.b64decode(credentials_base64))
 
     if credentials_path:
-        credentials = service_account.Credentials.from_service_account_file(
-            credentials_path
-        )
-        credentials = credentials.with_scopes(SCOPES)
-        default_project = credentials.project_id
-    elif credentials_info:
- 
         credentials = google.oauth2.credentials.Credentials(
             credentials_info['token'],
+            refresh_token=credentials_info['refresh_token'],
+            token_uri=credentials_info['token_uri'],
+            client_id=credentials_info['client_id'],
+            client_secret=credentials_info['client_secret']
+            # access_token= credentials_info['access_token']
+        )  
+        default_project = project_id
+    elif credentials_info:
+        credentials = cre.Credentials(
+            token=credentials_info['token'],
             refresh_token=credentials_info['refresh_token'],
             token_uri=credentials_info['token_uri'],
             client_id=credentials_info['client_id'],

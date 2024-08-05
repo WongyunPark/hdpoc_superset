@@ -70,6 +70,7 @@ from superset.extensions import (
     event_logger,
     security_manager,
     ssh_manager_factory,
+    appbuilder
 )
 from superset.models.helpers import AuditMixinNullable, ImportExportMixin
 from superset.result_set import SupersetResultSet
@@ -535,6 +536,32 @@ class Database(Model, AuditMixinNullable, ImportExportMixin):  # pylint: disable
                 security_manager,
                 source,
             )
+            if ('bigquery' in str(sqlalchemy_url)):
+                oauth_token = dict()                            
+                
+                logging.info('=======================superset.models.core:OAUTH_PROVIDERS============================')
+                logging.info(config["OAUTH_PROVIDERS"][0]['remote_app']['client_id'])
+                logging.info(config["OAUTH_PROVIDERS"][0]['remote_app']['client_secret'])
+                logging.info('=======================superset.models.core:tokengetter()============================')
+                logging.info(appbuilder.sm.oauth_tokengetter())
+                logging.info('=======================superset.models.core:get_sm_session============================')
+                logging.info(appbuilder.security_manager_class.get_sm_session())
+                logging.info('=======================superset.models.core:access_token============================')
+                logging.info(appbuilder.security_manager_class.get_sm_session()['access_token'])  
+                logging.info('=======================superset.models.core:refresh_token============================')
+                logging.info(appbuilder.security_manager_class.get_sm_session()['refresh_token'])                   
+
+                oauth_token['token'] = appbuilder.sm.oauth_tokengetter()[0]            
+                oauth_token['token_uri'] = 'https://oauth2.googleapis.com/token'
+                oauth_token['client_id'] = config["OAUTH_PROVIDERS"][0]['remote_app']['client_id']
+                oauth_token['client_secret'] = config["OAUTH_PROVIDERS"][0]['remote_app']['client_secret']
+                oauth_token['refresh_token'] = appbuilder.security_manager_class.get_sm_session()['refresh_token']
+                oauth_token['access_token'] = appbuilder.security_manager_class.get_sm_session()['access_token']
+                # oauth_token['client_email'] = appbuilder.security_manager_class.get_sm_session()['client_email']
+
+                logging.info('=======================superset.models.core:params[credentials_info]============================')
+                params['credentials_info'] = oauth_token
+                logging.info(params['credentials_info']) 
         try:
             return create_engine(sqlalchemy_url, **params)
         except Exception as ex:

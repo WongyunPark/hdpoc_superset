@@ -30,7 +30,7 @@ def FLASK_APP_MUTATOR(app: Flask) -> None:
     app.before_request_funcs.setdefault(None, []).append(make_session_permanent)
 
 # Set the authentication type to OAuth
-AUTH_TYPE = AUTH_OAUTH
+# AUTH_TYPE = AUTH_OAUTH
 
 OAUTH_PROVIDERS = [
     {

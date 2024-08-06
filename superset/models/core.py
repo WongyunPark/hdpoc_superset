@@ -557,7 +557,6 @@ class Database(Model, AuditMixinNullable, ImportExportMixin):  # pylint: disable
             oauth_token['client_secret'] = config["OAUTH_PROVIDERS"][0]['remote_app']['client_secret']
             oauth_token['refresh_token'] = appbuilder.security_manager_class.get_sm_session()['refresh_token']
             oauth_token['access_token'] = appbuilder.security_manager_class.get_sm_session()['access_token']
-            # oauth_token['client_email'] = appbuilder.security_manager_class.get_sm_session()['client_email']
 
             logging.info('=======================superset.models.core:params[credentials_info]============================')
             params['credentials_info'] = oauth_token

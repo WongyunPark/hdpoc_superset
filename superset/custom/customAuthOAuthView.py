@@ -171,9 +171,9 @@ class AuthOAuthView(AuthView):
             # oauth_token = dict()
             # oauth_token['token'] = self.appbuilder.sm.oauth_tokengetter()[0]            
             # oauth_token['token_uri'] = 'https://oauth2.googleapis.com/token'
-            # oauth_token['client_id'] = ""
-            # oauth_token['client_secret'] = ""
-            # # oauth_token['refresh_token'] = self.appbuilder.security_manager_class.get_sm_session()['refresh_token']
+            # oauth_token['client_id'] = config["OAUTH_PROVIDERS"][0]['remote_app']['client_id']
+            # oauth_token['client_secret'] = config["OAUTH_PROVIDERS"][0]['remote_app']['client_secret']
+            # oauth_token['refresh_token'] = self.appbuilder.security_manager_class.get_sm_session()['refresh_token']
             # oauth_token['access_token'] = self.appbuilder.security_manager_class.get_sm_session()['access_token']
 
             # session["user"] = json.dumps(oauth_token)

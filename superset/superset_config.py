@@ -47,8 +47,7 @@ OAUTH_PROVIDERS = [
             "request_token_url": None,
             "access_token_url": "https://accounts.google.com/o/oauth2/token",
             "authorize_url": "https://accounts.google.com/o/oauth2/auth",
-            "jwks_uri" : "https://www.googleapis.com/oauth2/v3/certs",
-            "redirect_uri": "https://superset.adwpoc.com/oauth-authonzed/google"
+            "jwks_uri" : "https://www.googleapis.com/oauth2/v3/certs"
         }
     }
 ]

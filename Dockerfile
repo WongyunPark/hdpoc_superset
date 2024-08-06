@@ -97,7 +97,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     && apt-get autoremove -yqq --purge build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-COPY ./custom/bigquery/*.py /usr/local/lib/python3.9/site-packages/sqlalchemy_bigquery/
+COPY ./custom/bigquery/*.py /usr/local/lib/python3.10/site-packages/sqlalchemy_bigquery/
 
 # Copy the compiled frontend assets
 COPY --chown=superset:superset --from=superset-node /app/superset/static/assets superset/static/assets
